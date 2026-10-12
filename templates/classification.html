@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Классификация видов пингвинов</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; max-width: 540px; margin: 40px auto; padding: 0 16px; line-height: 1.5; }
+        nav { margin-bottom: 24px; padding-bottom: 12px; border-bottom: 1px solid #ddd; }
+        nav a { margin-right: 16px; font-weight: bold; text-decoration: none; color: #0066cc; }
+        nav a.active { color: #111; border-bottom: 2px solid #111; }
+        .form-group { margin-bottom: 14px; }
+        label { display: block; font-weight: 500; margin-bottom: 4px; }
+        input[type="number"] { width: 100%; padding: 8px 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
+        button { margin-top: 10px; width: 100%; padding: 10px; background-color: #0066cc; color: #fff; border: none; border-radius: 4px; font-size: 16px; cursor: pointer; }
+        button:hover { background-color: #0052a3; }
+        .result-box { margin-top: 24px; padding: 16px; background-color: #f0f7ff; border-left: 5px solid #0066cc; border-radius: 4px; }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="/classification" class="active">Классификация</a>
+        <a href="/regression">Регрессия</a>
+    </nav>
+
+    <h2>Классификация пингвинов (вид)</h2>
+    <p>Введите физические параметры птицы для предсказания её вида:</p>
+
+    <form method="post" action="/classification">
+        <div class="form-group">
+            <label for="bill_length">Длина клюва (мм):</label>
+            <input type="number" step="0.1" id="bill_length" name="bill_length" value="{{ values.bill_length if values else '39.1' }}" required>
+        </div>
+
+        <div class="form-group">
+            <label for="bill_depth">Глубина клюва (мм):</label>
+            <input type="number" step="0.1" id="bill_depth" name="bill_depth" value="{{ values.bill_depth if values else '18.7' }}" required>
+        </div>
+
+        <div class="form-group">
+            <label for="flipper_length">Длина крыла (мм):</label>
+            <input type="number" step="0.1" id="flipper_length" name="flipper_length" value="{{ values.flipper_length if values else '181.0' }}" required>
+        </div>
+
+        <div class="form-group">
+            <label for="body_mass">Масса тела (г):</label>
+            <input type="number" step="1" id="body_mass" name="body_mass" value="{{ values.body_mass if values else '3750' }}" required>
+        </div>
+
+        <button type="submit">Определить вид</button>
+    </form>
+
+    {% if prediction %}
+    <div class="result-box">
+        <h3>Результат:</h3>
+        <p>Предсказанный вид пингвина: <strong>{{ prediction }}</strong></p>
+    </div>
+    {% endif %}
+
+</body>
+</html>
